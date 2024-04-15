@@ -35,12 +35,14 @@ provider:
   name: aws
   runtime: nodejs18.x
   ## this is my personal AWS account. This must be skipped in you serverless.yml
-  profile: yurets
+  # profile: yurets
 
 plugins:
   - serverless-ignore
   - serverless-finch
   - serverless-single-page-app-plugin
+  - "@serverless-aws/serverless-s3-remover"
+
 
 custom:
   ## Serverless-finch configuration
@@ -52,6 +54,10 @@ custom:
   ## Serverless-single-page-app-plugin configuration:
   s3LocalPath: ${self:custom.client.distributionFolder}/
   s3BucketName: ${self:custom.client.bucketName}
+  remover:
+    prompt: true
+    buckets:
+       - ${self:custom.client.bucketName}
 
 resources:
   Resources:
